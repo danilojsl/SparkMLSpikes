@@ -16,18 +16,14 @@ lazy val sparkDependencies = Seq(
   "org.apache.spark" %% "spark-mllib" % sparkVer,
 )
 
-val minIOVersion = "8.4.5"
-val minIO = "io.minio" % "minio" % minIOVersion
+val redisClientVersion = "4.3.1"
+val redisClient = "redis.clients" % "jedis" % redisClientVersion
 
-lazy val minIODependencies = Seq(
-  minIO
-    exclude ("com.fasterxml.jackson.core", "jackson-annotations")
-    exclude ("com.fasterxml.jackson.core", "jackson-databind")
-    exclude ("com.fasterxml.jackson.core", "jackson-core")
-    exclude ("commons-configuration", "commons-configuration")
+lazy val redisDependencies = Seq(
+  redisClient
 )
 
-libraryDependencies ++= sparkDependencies ++ minIODependencies
+libraryDependencies ++= sparkDependencies ++ redisDependencies
 
 assemblyMergeStrategy in assembly := {
   case PathList("META-INF", xs @ _*) => MergeStrategy.discard
@@ -36,4 +32,4 @@ assemblyMergeStrategy in assembly := {
 
 assembly / test := {}
 
-assembly / mainClass := Some("com.spark.ml.spikes.MinIOConnection")
+assembly / mainClass := Some("com.spark.ml.spikes.ForestExample")
